@@ -43,7 +43,7 @@ int client_cli(const int argc, char* argv[])
         switch(argc) {
         case USR_CLI_DEFAULT_IP_N_PORT: {
                 printf("Set to default ip: 127.0.0.1 (localhost) and default port: 80\n");
-                return client_connect(DEFAULT_IP, DEFAULT_PORT);
+                return client_connect(htonl(DEFAULT_IP), DEFAULT_PORT);
         }
                 
         case USR_CLI_DEFAULT_PORT: {
@@ -118,7 +118,9 @@ int server_start(int port)
         recvfrom(server_socket, buffer,     MAX_BUFFER_SIZE, 0,     NULL,         NULL);
 
         printf("Package was received\n"); // print message if package was received
-
+    
+        close(server_socket);
+          
         return 0;
 }
 
