@@ -10,7 +10,7 @@
 
 #include <stdio.h>
 
-#define MAX_BUFFER_SIZE 1024        /** max buffer size that server will receive by using recvfrom() function */
+#define MAX_BUFFER_SIZE 1024        /**< max buffer size that server will receive by using recvfrom() function */
 
 enum CLIENT_ERRORS {
         INCORRECT_ARG_NUM    = -5,  /**< return value of client_cli() or server_cli() if incorrect number
@@ -54,19 +54,34 @@ enum CLI_ARGS_COUNT {
 
 int client_connect(const int ip_addr, const int port);
 
-/** @brief function that handle command arguments and connect to network by using client_connect() if arguments
+/** @brief function that handle command line arguments and connect to network by using client_connect() if arguments
  *  is correct.
  *  @param argc argument count
  *  @param argv array of strings 
- *  @return return INCORRECT_PORT if port number is inccorect, INCORRRECT_IP if ip address is incorrect,
+ *  @return return INCORRECT_PORT if port number is incorrect, INCORRRECT_IP if ip address is incorrect,
+ *          INCORRECT_ARG_NUM if argument number is incorrect,
  *          CLIENT_CONNECT_ERROR if client_connect() return error, else return 0 
  */
 int client_cli(const int argc, char* argv[]);
 
+/** @brief start listen on chosen port 
+ *  @param port chosen port
+ *  @return SERVER_ERROR if a server socket creating error or bind function error has occured
+ */
 int server_start(int port);
+
+/** @brief function that handle command line arguments and start server by using server_start() if argument is correct
+ * @param argc argument count
+ * @param argv array of strings
+ * @return return INCORRECT_PORT if port number is incorrect, INCORRECT_ARG_NUM if argument number is
+ * incorrect, return SERVER_ERROR if server_start() return error, else return 0
+ */
 
 int server_cli(int argc, char* argv[]);
 
+
+/** @brief write help if help flag is used (--help)
+ */
 void write_help();
 
 #endif
